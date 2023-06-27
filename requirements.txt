@@ -1,0 +1,6 @@
+grpcio==1.56.0
+protobuf==4.23.3
+protobuf3_to_dict==0.1.5
+protobuf_to_dict==0.1.0
+Requests==2.31.0
+SQLAlchemy==1.4.48
