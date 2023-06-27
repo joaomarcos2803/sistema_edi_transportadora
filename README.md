@@ -15,6 +15,7 @@ Servidor gRPC do sistema da transportadora da aplicação de EDI
    ```bash
      git clone https://github.com/joaomarcos2803/sistema_edi_transportadora.git
      cd sistema_edi_transportadora
+     cd edi
    ```
 2. Instalar dependências
 

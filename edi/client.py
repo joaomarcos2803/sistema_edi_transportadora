@@ -46,14 +46,14 @@ def test_grpc_server():
         )
         order_request = edi_pb2.CreateOrderRequest(
             order=order,
-            service=edi_pb2.SERVICES.PAC,
+            service=edi_pb2.SERVICES.SEDEX,
             delivery_time=5
         )
 
         order_response = stub.CreateOrder(order_request)
         print("Tracking Code:", order_response.tracking_code)
 
-        cancel_request = edi_pb2.CancelOrderRequest(tracking_code="ORD-202306131879")
+        cancel_request = edi_pb2.CancelOrderRequest(tracking_code='ORD-202306131977')
         cancel_response = stub.CancelOrder(cancel_request)
         print("Cancellation Success:", cancel_response.success)
         print("Message:", cancel_response.message)

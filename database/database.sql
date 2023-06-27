@@ -51,3 +51,9 @@ CREATE TABLE IF NOT EXISTS public.transport_order
 
 CREATE TYPE public.status_type AS ENUM
 ('Awaiting Collection', 'Send', 'In Transport', 'Delivered', 'Canceled');
+
+
+INSERT INTO services(id, name, phone, street, complement, number, district, city, postal_code)
+VALUES 
+(1, 'PAC', '1199999999', 'Rua do PAC', 'Complemento do PAC', 123, 'Bairro do PAC', 'Cidade do PAC', '12345678'),
+(2, 'SEDEX', '1199999999', 'Rua do SEDEX', 'Complemento do SEDEX', 456, 'Bairro do SEDEX', 'Cidade do SEDEX', '87654321')
