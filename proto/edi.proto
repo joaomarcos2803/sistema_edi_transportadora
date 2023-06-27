@@ -29,16 +29,12 @@ message Order {
     Address shipping_address = 5;
 }
 
-message CreateOrderRequest {
-    Order order = 1;
-    SERVICES service = 2;
-}
-
 message Customer {
-    string name = 1;
-    string cpf = 2;
-    string phonenumber = 3;
-    string email = 4;
+    int32 id = 1;
+    string name = 2;
+    string cpf = 3;
+    string phonenumber = 4;
+    string email = 5;
 }
 
 message Address {
@@ -56,9 +52,15 @@ message ShippingRequest {
 }
 
 message ShippingResponse {
-    int64 expected_days = 1;
+    int32 expected_days = 1;
     double shipping_cost = 2;
     string service = 3;
+}
+
+message CreateOrderRequest {
+    Order order = 1;
+    SERVICES service = 2;
+    int32 delivery_time = 3;
 }
 
 message CreateOrderResponse {
@@ -67,11 +69,11 @@ message CreateOrderResponse {
 }
 
 message CancelOrderRequest {
-    string order_id = 1;
+    string tracking_code = 1;
 }
 
 message CancelOrderResponse {
     bool success = 1;
-    string mensage = 2;
+    string message = 2;
 }
 

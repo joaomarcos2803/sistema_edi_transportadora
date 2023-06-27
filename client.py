@@ -4,14 +4,10 @@ import proto.edi_pb2_grpc as edi_pb2_grpc
 from google.protobuf.timestamp_pb2 import Timestamp
 
 def test_grpc_server():
-    # Create a gRPC channel
     channel = grpc.insecure_channel('localhost:50051')
-
-    # Create a gRPC stub
     stub = edi_pb2_grpc.EDIServiceStub(channel)
 
     try:
-        # Make a shipping request
         item1 = edi_pb2.Item(name="Item 1", unit_price=10.0, quantity=2)
         item2 = edi_pb2.Item(name="Item 2", unit_price=5.0, quantity=3)
         shipping_request = edi_pb2.ShippingRequest(
@@ -32,9 +28,9 @@ def test_grpc_server():
             print("Expected Days:", response.expected_days)
             print()
 
-        # Make an order creation request
         customer = edi_pb2.Customer(
-            name="John Doe",
+            id=1,
+            name="John Teste",
             cpf="12345678900",
             phonenumber="555-1234",
             email="johndoe@example.com"
@@ -50,21 +46,21 @@ def test_grpc_server():
         )
         order_request = edi_pb2.CreateOrderRequest(
             order=order,
-            service=edi_pb2.SERVICES.PAC
+            service=edi_pb2.SERVICES.PAC,
+            delivery_time=5
         )
 
         order_response = stub.CreateOrder(order_request)
         print("Tracking Code:", order_response.tracking_code)
 
-        # cancel_request = edi_pb2.CancelOrderRequest(order_id="123456")
-        # cancel_response = stub.CancelOrder(cancel_request)
-        # print("Cancellation Success:", cancel_response.success)
-        # print("Message:", cancel_response.message)
+        cancel_request = edi_pb2.CancelOrderRequest(tracking_code="ORD-202306131879")
+        cancel_response = stub.CancelOrder(cancel_request)
+        print("Cancellation Success:", cancel_response.success)
+        print("Message:", cancel_response.message)
 
     except grpc.RpcError as e:
         print(f"Error: {e}")
 
-    # Close the gRPC channel
     channel.close()
 
 if __name__ == '__main__':

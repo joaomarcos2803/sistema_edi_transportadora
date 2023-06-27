@@ -6,6 +6,7 @@ from model import *
 from concurrent import futures
 from dao import *
 from protobuf_to_dict import protobuf_to_dict
+import datetime
 
 class AcessDB:
     def insert(obj):
@@ -17,7 +18,17 @@ class AcessDB:
             return 1
         except:
             return 0
-
+        
+    def update(obj):
+        try:
+            session = DAO.getSession()
+            DAO.update(session, obj)
+            session.commit()
+            session.close()
+            return 1
+        except:
+            return 0
+        
     def selectClientAddress(name):
         try:
             session = DAO.getSession()
@@ -60,10 +71,8 @@ class EDIServicer(edi_pb2_grpc.EDIServiceServicer):
         to_postal_code = request.shipping_address.cep
         products = request.items
 
-        # Converter produtos para um dicionário JSON
         products_dict = [protobuf_to_dict(product) for product in products]
 
-        # Chamar a API com os produtos em formato JSON
         api = MelhorEnvioAPI()
         items = api.calculate_shipping(to_postal_code, products_dict)
         response = edi_pb2.ShippingResponse()
@@ -76,11 +85,12 @@ class EDIServicer(edi_pb2_grpc.EDIServiceServicer):
 
     def CreateOrder(self, request, context):
         products = request.order.items
-        date = request.order.date
         customer = request.order.customer
         shipping_address = request.order.shipping_address
         service_name = edi_pb2.SERVICES.Name(request.service)
         service = self.manipulateDB.selectService(service_name)
+        delivery_time = request.delivery_time
+        sucess = True
 
         service_dict = {
             "id": service.id,
@@ -95,6 +105,7 @@ class EDIServicer(edi_pb2_grpc.EDIServiceServicer):
         } 
 
         receiver_dict = {
+            "id": customer.id,
             "name": customer.name,
             "phone": customer.phonenumber,
             "email": customer.email,
@@ -107,15 +118,71 @@ class EDIServicer(edi_pb2_grpc.EDIServiceServicer):
         }
 
         products_dict = [protobuf_to_dict(product) for product in products]
-     
+
+        #inserindo o cliente no banco 
+        receiver_db = dict(receiver_dict)  
+        receiver_db["street"] = receiver_db.pop("address") 
+        receiver_db["cep"] = receiver_db.pop("postal_code") 
+
+        clientAddress = ClientAddres()
+
+        for key, value in receiver_db.items():
+            if hasattr(clientAddress, key):
+                setattr(clientAddress, key, value)
+
+        if self.manipulateDB.selectClientAddress(clientAddress.id):
+            if not self.manipulateDB.update(clientAddress):
+                sucess = False
+        else:
+            if not self.manipulateDB.insert(clientAddress):
+                sucess = False
+           
+        #consultando a api para gerar o código de rastreamento dos produtos
         api = MelhorEnvioAPI()
         response = api.create_cart(service_dict['id'], service_dict, receiver_dict, products_dict)
         package_code = response['protocol']
-        return edi_pb2.CreateOrderResponse(tracking_code=package_code, sucess=True)
 
+        #inserindo o transport_order no banco
+        client = self.manipulateDB.selectClientAddress(customer.id)
+
+        transport_order = TransportOrder(package_code=package_code, delivery_time=delivery_time, status='Awaiting Collection')
+        transport_order.client_address = client
+        transport_order.service = service
+
+        if not self.manipulateDB.insert(transport_order):
+            sucess = False
+        
+        if sucess:
+            print('Cliente inserido ou atualizado e TransportOrder inserindo no banco!')
+
+        return edi_pb2.CreateOrderResponse(tracking_code=package_code, sucess=sucess)
+    
     def CancelOrder(self, request, context):
-       
-        return edi_pb2.CancelOrderResponse()
+        tracking_code = request.tracking_code
+        success = False
+        message = ''
+        order_transport = self.manipulateDB.selectTransportOrder(tracking_code)
+
+        if not order_transport:
+            success = False
+            message = 'Ordem de transporte não encontrada'
+
+        created_at_datetime = order_transport.created_at
+        max_date = created_at_datetime + datetime.timedelta(days=1)
+
+        if datetime.date.today() > max_date:
+            success = False
+            message = 'A data máxima para cancelamento foi excedida'
+        else:
+            success = True
+            message = 'Ordem de transporte cancelada com sucesso'
+            order_transport.status = 'Canceled'
+
+            if not self.manipulateDB.update(order_transport):
+                success = False
+                message = 'Erro ao atualizar o status da ordem de transporte'
+
+        return edi_pb2.CancelOrderResponse(success = success, message = message)
 
 
 def serve():

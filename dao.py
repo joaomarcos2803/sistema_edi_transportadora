@@ -13,11 +13,14 @@ class DAO():
     def insert(session, obj):
         session.add(obj)
 
-class DAOClientAddress():
-    def select(session, name):
-        client = session.query(ClientAddres).filter(ClientAddres.name == name).first()
-        return client
+    def update(session, obj):
+        session.merge(obj)  
 
+class DAOClientAddress():
+    def select(session, id):
+        client = session.query(ClientAddres).filter(ClientAddres.id == id).first()
+        return client
+    
 class DAOTransportOrder():
     def select(session, package_code):
         transport_order = session.query(TransportOrder).filter(TransportOrder.package_code == package_code).first()

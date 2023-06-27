@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tedi.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"F\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nunit_price\x18\x03 \x01(\x01\x12\x10\n\x08quantity\x18\x04 \x01(\x05\"\x9d\x01\n\x05Order\x12\x14\n\x05items\x18\x01 \x03(\x0b\x32\x05.Item\x12\x13\n\x0btotal_price\x18\x02 \x01(\x01\x12(\n\x04\x64\x61te\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1b\n\x08\x63ustomer\x18\x04 \x01(\x0b\x32\t.Customer\x12\"\n\x10shipping_address\x18\x05 \x01(\x0b\x32\x08.Address\"G\n\x12\x43reateOrderRequest\x12\x15\n\x05order\x18\x01 \x01(\x0b\x32\x06.Order\x12\x1a\n\x07service\x18\x02 \x01(\x0e\x32\t.SERVICES\"I\n\x08\x43ustomer\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x63pf\x18\x02 \x01(\t\x12\x13\n\x0bphonenumber\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\"j\n\x07\x41\x64\x64ress\x12\x0e\n\x06street\x18\x01 \x01(\t\x12\x10\n\x08\x64istrict\x18\x02 \x01(\t\x12\x0e\n\x06number\x18\x03 \x01(\x05\x12\x0c\n\x04\x63ity\x18\x04 \x01(\t\x12\x0b\n\x03\x63\x65p\x18\x05 \x01(\t\x12\x12\n\ncomplement\x18\x06 \x01(\t\"K\n\x0fShippingRequest\x12\x14\n\x05items\x18\x01 \x03(\x0b\x32\x05.Item\x12\"\n\x10shipping_address\x18\x02 \x01(\x0b\x32\x08.Address\"Q\n\x10ShippingResponse\x12\x15\n\rexpected_days\x18\x01 \x01(\x03\x12\x15\n\rshipping_cost\x18\x02 \x01(\x01\x12\x0f\n\x07service\x18\x03 \x01(\t\"<\n\x13\x43reateOrderResponse\x12\x0e\n\x06sucess\x18\x01 \x01(\x08\x12\x15\n\rtracking_code\x18\x02 \x01(\t\"&\n\x12\x43\x61ncelOrderRequest\x12\x10\n\x08order_id\x18\x01 \x01(\t\"7\n\x13\x43\x61ncelOrderResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07mensage\x18\x02 \x01(\t*)\n\x08SERVICES\x12\t\n\x05OTHER\x10\x00\x12\x07\n\x03PAC\x10\x01\x12\t\n\x05SEDEX\x10\x02\x32\xc2\x01\n\nEDIService\x12<\n\x11\x43\x61lculateShipping\x12\x10.ShippingRequest\x1a\x11.ShippingResponse\"\x00\x30\x01\x12:\n\x0b\x43reateOrder\x12\x13.CreateOrderRequest\x1a\x14.CreateOrderResponse\"\x00\x12:\n\x0b\x43\x61ncelOrder\x12\x13.CancelOrderRequest\x1a\x14.CancelOrderResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tedi.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"F\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nunit_price\x18\x03 \x01(\x01\x12\x10\n\x08quantity\x18\x04 \x01(\x05\"\x9d\x01\n\x05Order\x12\x14\n\x05items\x18\x01 \x03(\x0b\x32\x05.Item\x12\x13\n\x0btotal_price\x18\x02 \x01(\x01\x12(\n\x04\x64\x61te\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1b\n\x08\x63ustomer\x18\x04 \x01(\x0b\x32\t.Customer\x12\"\n\x10shipping_address\x18\x05 \x01(\x0b\x32\x08.Address\"U\n\x08\x43ustomer\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0b\n\x03\x63pf\x18\x03 \x01(\t\x12\x13\n\x0bphonenumber\x18\x04 \x01(\t\x12\r\n\x05\x65mail\x18\x05 \x01(\t\"j\n\x07\x41\x64\x64ress\x12\x0e\n\x06street\x18\x01 \x01(\t\x12\x10\n\x08\x64istrict\x18\x02 \x01(\t\x12\x0e\n\x06number\x18\x03 \x01(\x05\x12\x0c\n\x04\x63ity\x18\x04 \x01(\t\x12\x0b\n\x03\x63\x65p\x18\x05 \x01(\t\x12\x12\n\ncomplement\x18\x06 \x01(\t\"K\n\x0fShippingRequest\x12\x14\n\x05items\x18\x01 \x03(\x0b\x32\x05.Item\x12\"\n\x10shipping_address\x18\x02 \x01(\x0b\x32\x08.Address\"Q\n\x10ShippingResponse\x12\x15\n\rexpected_days\x18\x01 \x01(\x05\x12\x15\n\rshipping_cost\x18\x02 \x01(\x01\x12\x0f\n\x07service\x18\x03 \x01(\t\"^\n\x12\x43reateOrderRequest\x12\x15\n\x05order\x18\x01 \x01(\x0b\x32\x06.Order\x12\x1a\n\x07service\x18\x02 \x01(\x0e\x32\t.SERVICES\x12\x15\n\rdelivery_time\x18\x03 \x01(\x05\"<\n\x13\x43reateOrderResponse\x12\x0e\n\x06sucess\x18\x01 \x01(\x08\x12\x15\n\rtracking_code\x18\x02 \x01(\t\"+\n\x12\x43\x61ncelOrderRequest\x12\x15\n\rtracking_code\x18\x01 \x01(\t\"7\n\x13\x43\x61ncelOrderResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t*)\n\x08SERVICES\x12\t\n\x05OTHER\x10\x00\x12\x07\n\x03PAC\x10\x01\x12\t\n\x05SEDEX\x10\x02\x32\xc2\x01\n\nEDIService\x12<\n\x11\x43\x61lculateShipping\x12\x10.ShippingRequest\x1a\x11.ShippingResponse\"\x00\x30\x01\x12:\n\x0b\x43reateOrder\x12\x13.CreateOrderRequest\x1a\x14.CreateOrderResponse\"\x00\x12:\n\x0b\x43\x61ncelOrder\x12\x13.CancelOrderRequest\x1a\x14.CancelOrderResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,28 +22,28 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'edi_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_SERVICES']._serialized_start=853
-  _globals['_SERVICES']._serialized_end=894
+  _globals['_SERVICES']._serialized_start=893
+  _globals['_SERVICES']._serialized_end=934
   _globals['_ITEM']._serialized_start=46
   _globals['_ITEM']._serialized_end=116
   _globals['_ORDER']._serialized_start=119
   _globals['_ORDER']._serialized_end=276
-  _globals['_CREATEORDERREQUEST']._serialized_start=278
-  _globals['_CREATEORDERREQUEST']._serialized_end=349
-  _globals['_CUSTOMER']._serialized_start=351
-  _globals['_CUSTOMER']._serialized_end=424
-  _globals['_ADDRESS']._serialized_start=426
-  _globals['_ADDRESS']._serialized_end=532
-  _globals['_SHIPPINGREQUEST']._serialized_start=534
-  _globals['_SHIPPINGREQUEST']._serialized_end=609
-  _globals['_SHIPPINGRESPONSE']._serialized_start=611
-  _globals['_SHIPPINGRESPONSE']._serialized_end=692
-  _globals['_CREATEORDERRESPONSE']._serialized_start=694
-  _globals['_CREATEORDERRESPONSE']._serialized_end=754
-  _globals['_CANCELORDERREQUEST']._serialized_start=756
-  _globals['_CANCELORDERREQUEST']._serialized_end=794
-  _globals['_CANCELORDERRESPONSE']._serialized_start=796
-  _globals['_CANCELORDERRESPONSE']._serialized_end=851
-  _globals['_EDISERVICE']._serialized_start=897
-  _globals['_EDISERVICE']._serialized_end=1091
+  _globals['_CUSTOMER']._serialized_start=278
+  _globals['_CUSTOMER']._serialized_end=363
+  _globals['_ADDRESS']._serialized_start=365
+  _globals['_ADDRESS']._serialized_end=471
+  _globals['_SHIPPINGREQUEST']._serialized_start=473
+  _globals['_SHIPPINGREQUEST']._serialized_end=548
+  _globals['_SHIPPINGRESPONSE']._serialized_start=550
+  _globals['_SHIPPINGRESPONSE']._serialized_end=631
+  _globals['_CREATEORDERREQUEST']._serialized_start=633
+  _globals['_CREATEORDERREQUEST']._serialized_end=727
+  _globals['_CREATEORDERRESPONSE']._serialized_start=729
+  _globals['_CREATEORDERRESPONSE']._serialized_end=789
+  _globals['_CANCELORDERREQUEST']._serialized_start=791
+  _globals['_CANCELORDERREQUEST']._serialized_end=834
+  _globals['_CANCELORDERRESPONSE']._serialized_start=836
+  _globals['_CANCELORDERRESPONSE']._serialized_end=891
+  _globals['_EDISERVICE']._serialized_start=937
+  _globals['_EDISERVICE']._serialized_end=1131
 # @@protoc_insertion_point(module_scope)

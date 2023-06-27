@@ -11,7 +11,7 @@ class ClientAddres(Base):
     __tablename__ = 'client_address'
     __table_args__ = {'schema': 'public'}
 
-    id = Column(Integer, primary_key=True, server_default=text("nextval('\"public\".client_address_id_seq'::regclass)"))
+    id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False, unique=True)
     phone = Column(String(20), nullable=False)
     street = Column(String(60), nullable=False)
@@ -43,9 +43,9 @@ class TransportOrder(Base):
 
     id = Column(Integer, primary_key=True, server_default=text("nextval('\"public\".transport_order_id_seq'::regclass)"))
     package_code = Column(String(50), nullable=False, unique=True)
-    created_at = Column(Date, nullable=False)
-    deadline = Column(Date, nullable=False)
-    status = Column(Enum('Awaiting Collection', 'Send', 'In Transport', 'Delivered', name='status_type'))
+    created_at = Column(Date, server_default=text("now()"))
+    delivery_time = Column(Integer, nullable=False)
+    status = Column(Enum('Awaiting Collection', 'Send', 'In Transport', 'Delivered', 'Canceled', name='status_type'), nullable=False)
     client_address_id = Column(ForeignKey('public.client_address.id', ondelete='CASCADE'), nullable=False)
     service_id = Column(ForeignKey('public.services.id'), nullable=False)
 
